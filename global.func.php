@@ -1,11 +1,4 @@
 <?php
-/**
- *  global.func.php 公共函数库
- *
- * @copyright			(C) 2005-2010 PHPCMS
- * @license				http://www.phpcms.cn/license/
- * @lastmodify			2010-6-1
- */
 
 /**
  * 返回经addslashes处理过的字符串或数组
