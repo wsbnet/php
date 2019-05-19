@@ -2,8 +2,8 @@
 /**
  *  global.func.php 公共函数库
  *
- * @copyright			(C) 2005-2010 PHPCMS
- * @license				http://www.phpcms.cn/license/
+ * @copyright			(C) 2005-2010 MYCMS
+ * @license				http://www.MYCMS.cn/license/
  * @lastmodify			2010-6-1
  */
 
@@ -503,13 +503,13 @@ function template($module = 'content', $template = 'index', $style = '') {
 	}
 	if(!$style) $style = 'default';
 	$template_cache = pc_base::load_sys_class('template_cache');
-	$compiledtplfile = PHPCMS_PATH.'caches'.DIRECTORY_SEPARATOR.'caches_template'.DIRECTORY_SEPARATOR.$style.DIRECTORY_SEPARATOR.$module.DIRECTORY_SEPARATOR.$template.'.php';
+	$compiledtplfile = MYCMS_PATH.'caches'.DIRECTORY_SEPARATOR.'caches_template'.DIRECTORY_SEPARATOR.$style.DIRECTORY_SEPARATOR.$module.DIRECTORY_SEPARATOR.$template.'.php';
 	if(file_exists(PC_PATH.'templates'.DIRECTORY_SEPARATOR.$style.DIRECTORY_SEPARATOR.$module.DIRECTORY_SEPARATOR.$template.'.html')) {
 		if(!file_exists($compiledtplfile) || (@filemtime(PC_PATH.'templates'.DIRECTORY_SEPARATOR.$style.DIRECTORY_SEPARATOR.$module.DIRECTORY_SEPARATOR.$template.'.html') > @filemtime($compiledtplfile))) {
 			$template_cache->template_compile($module, $template, $style);
 		}
 	} else {
-		$compiledtplfile = PHPCMS_PATH.'caches'.DIRECTORY_SEPARATOR.'caches_template'.DIRECTORY_SEPARATOR.'default'.DIRECTORY_SEPARATOR.$module.DIRECTORY_SEPARATOR.$template.'.php';
+		$compiledtplfile = MYCMS_PATH.'caches'.DIRECTORY_SEPARATOR.'caches_template'.DIRECTORY_SEPARATOR.'default'.DIRECTORY_SEPARATOR.$module.DIRECTORY_SEPARATOR.$template.'.php';
 		if(!file_exists($compiledtplfile) || (file_exists(PC_PATH.'templates'.DIRECTORY_SEPARATOR.'default'.DIRECTORY_SEPARATOR.$module.DIRECTORY_SEPARATOR.$template.'.html') && filemtime(PC_PATH.'templates'.DIRECTORY_SEPARATOR.'default'.DIRECTORY_SEPARATOR.$module.DIRECTORY_SEPARATOR.$template.'.html') > filemtime($compiledtplfile))) {
 			$template_cache->template_compile($module, $template, 'default');
 		} elseif (!file_exists(PC_PATH.'templates'.DIRECTORY_SEPARATOR.'default'.DIRECTORY_SEPARATOR.$module.DIRECTORY_SEPARATOR.$template.'.html')) {
@@ -531,18 +531,18 @@ function template($module = 'content', $template = 'index', $style = '') {
 
 function my_error_handler($errno, $errstr, $errfile, $errline) {
 	if($errno==8) return '';
-	$errfile = str_replace(PHPCMS_PATH,'',$errfile);
+	$errfile = str_replace(MYCMS_PATH,'',$errfile);
 	if(pc_base::load_config('system','errorlog')) {
 		error_log('<?php exit;?>'.date('m-d H:i:s',SYS_TIME).' | '.$errno.' | '.str_pad($errstr,30).' | '.$errfile.' | '.$errline."\r\n", 3, CACHE_PATH.'error_log.php');
 	} else {
-		$str = '<div style="font-size:12px;text-align:left; border-bottom:1px solid #9cc9e0; border-right:1px solid #9cc9e0;padding:1px 4px;color:#000000;font-family:Arial, Helvetica,sans-serif;"><span>errorno:' . $errno . ',str:' . $errstr . ',file:<font color="blue">' . $errfile . '</font>,line' . $errline .'<br /><a href="http://faq.phpcms.cn/?type=file&errno='.$errno.'&errstr='.urlencode($errstr).'&errfile='.urlencode($errfile).'&errline='.$errline.'" target="_blank" style="color:red">Need Help?</a></span></div>';
+		$str = '<div style="font-size:12px;text-align:left; border-bottom:1px solid #9cc9e0; border-right:1px solid #9cc9e0;padding:1px 4px;color:#000000;font-family:Arial, Helvetica,sans-serif;"><span>errorno:' . $errno . ',str:' . $errstr . ',file:<font color="blue">' . $errfile . '</font>,line' . $errline .'<br /><a href="http://faq.MYCMS.cn/?type=file&errno='.$errno.'&errstr='.urlencode($errstr).'&errfile='.urlencode($errfile).'&errline='.$errline.'" target="_blank" style="color:red">Need Help?</a></span></div>';
 		echo $str;
 	}
 }
 
 /**
  * 提示信息页面跳转，跳转地址如果传入数组，页面会提示多个地址供用户选择，默认跳转地址为数组的第一个值，时间为5秒。
- * showmessage('登录成功', array('默认跳转地址'=>'http://www.phpcms.cn'));
+ * showmessage('登录成功', array('默认跳转地址'=>'http://www.MYCMS.cn'));
  * @param string $msg 提示信息
  * @param mixed(string/array) $url_forward 跳转地址
  * @param int $ms 跳转等待时间
@@ -1702,7 +1702,7 @@ function get_auth_key($prefix,$suffix="") {
  * @param string $txt 图形化文本内容
  * @param int $fonttype 无外部字体时生成文字大小，取值范围1-5
  * @param int $fontsize 引入外部字体时，字体大小
- * @param string $font 字体名称 字体请放于phpcms\libs\data\font下
+ * @param string $font 字体名称 字体请放于MYCMS\libs\data\font下
  * @param string $fontcolor 字体颜色 十六进制形式 如FFFFFF,FF0000
  */
 function string2img($txt, $fonttype = 5, $fontsize = 16, $font = '', $fontcolor = 'FF0000',$transparent = '1') {
@@ -1715,7 +1715,7 @@ function string2img($txt, $fonttype = 5, $fontsize = 16, $font = '', $fontcolor 
 }
 
 /**
- * 获取phpcms版本号
+ * 获取MYCMS版本号
  */
 function get_pc_version($type='') {
 	$version = pc_base::load_config('version');
@@ -1781,7 +1781,7 @@ function getmicrotime() {
 function p_template($plugin = 'content', $template = 'index',$style='default') {
 	if(!$style) $style = 'default';
 	$template_cache = pc_base::load_sys_class('template_cache');
-	$compiledtplfile = PHPCMS_PATH.'caches'.DIRECTORY_SEPARATOR.'caches_template'.DIRECTORY_SEPARATOR.$style.DIRECTORY_SEPARATOR.'plugin'.DIRECTORY_SEPARATOR.$plugin.DIRECTORY_SEPARATOR.$template.'.php';
+	$compiledtplfile = MYCMS_PATH.'caches'.DIRECTORY_SEPARATOR.'caches_template'.DIRECTORY_SEPARATOR.$style.DIRECTORY_SEPARATOR.'plugin'.DIRECTORY_SEPARATOR.$plugin.DIRECTORY_SEPARATOR.$template.'.php';
 
 	if(!file_exists($compiledtplfile) || (file_exists(PC_PATH.'plugin'.DIRECTORY_SEPARATOR.$plugin.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.$template.'.html') && filemtime(PC_PATH.'plugin'.DIRECTORY_SEPARATOR.$plugin.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.$template.'.html') > filemtime($compiledtplfile))) {
 		$template_cache->template_compile('plugin/'.$plugin, $template, 'default');
